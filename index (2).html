@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sahil Katiyar — AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:        #090909;
+    --bg-soft:   #0d0d10;
+    --card:      #111114;
+    --border:    #2a2a2e;
+    --border-soft: #1c1c20;
+    --primary:   #7c5cff;
+    --primary-dim: #7c5cff33;
+    --secondary: #4ade80;
+    --amber:     #f5b942;
+    --text:      #ececec;
+    --grey:      #a0a0a0;
+    --grey-dim:  #6b6b6f;
+
+    --font-pixel: 'Press Start 2P', monospace;
+    --font-body:  'Space Grotesk', sans-serif;
+    --font-mono:  'IBM Plex Mono', monospace;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background: radial-gradient(ellipse 80% 50% at 50% -10%, #14101f 0%, var(--bg) 55%);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height:1.6;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+
+  ::selection{ background: var(--primary); color:#fff; }
+
+  :focus-visible{
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: 1120px;
+    margin:0 auto;
+    padding: 0 24px;
+  }
+
+  .eyebrow{
+    font-family: var(--font-pixel);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--primary);
+  }
+
+  .scanlines{
+    pointer-events:none;
+    position:fixed; inset:0;
+    z-index:1;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.012) 0px,
+      rgba(255,255,255,0.012) 1px,
+      transparent 2px,
+      transparent 4px
+    );
+  }
+
+  nav{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    padding: 18px 24px;
+    transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+    border-bottom: 1px solid transparent;
+  }
+  nav.scrolled{
+    background: rgba(9,9,9,0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .nav-inner{
+    max-width:1120px;
+    margin:0 auto;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    font-family: var(--font-pixel);
+    font-size:14px;
+    color: var(--text);
+    border: 2px solid var(--primary);
+    padding:6px 9px;
+  }
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:28px;
+  }
+  .nav-links a{
+    font-size:14px;
+    color: var(--grey);
+    transition: color 0.15s ease;
+  }
+  .nav-links a:hover{ color: var(--text); }
+  .nav-resume{
+    font-family: var(--font-pixel);
+    font-size:10px;
+    color: var(--bg);
+    background: var(--primary);
+    padding:9px 14px;
+    border:2px solid var(--primary);
+  }
+  .nav-resume:hover{ background: transparent; color: var(--primary); }
+  .nav-toggle{ display:none; }
+
+  @media (max-width: 760px){
+    .nav-links{
+      position:fixed;
+      top:60px; left:0; right:0;
+      background: rgba(9,9,9,0.97);
+      backdrop-filter: blur(14px);
+      flex-direction:column;
+      align-items:flex-start;
+      gap:0;
+      border-bottom: 1px solid var(--border-soft);
+      max-height:0;
+      overflow:hidden;
+      transition: max-height 0.25s ease;
+    }
+    .nav-links.open{ max-height:400px; }
+    .nav-links a, .nav-links .nav-resume{
+      width:100%;
+      padding:16px 24px;
+      border-bottom:1px solid var(--border-soft);
+    }
+    .nav-toggle{
+      display:block;
+      font-family: var(--font-pixel);
+      font-size:16px;
+      color: var(--text);
+      background:none;
+      border:2px solid var(--border);
+      padding:8px 10px;
+      cursor:pointer;
+    }
+  }
+
+  .hero{
+    position:relative;
+    z-index:2;
+    padding: 150px 0 90px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .status-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family: var(--font-mono);
+    font-size:13px;
+    color: var(--secondary);
+    border:1px solid var(--secondary);
+    background: rgba(74,222,128,0.06);
+    padding:6px 12px;
+    margin-bottom:28px;
+  }
+  .status-dot{
+    width:7px; height:7px;
+    border-radius:50%;
+    background: var(--secondary);
+    box-shadow: 0 0 8px var(--secondary);
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .status-dot{ animation: pulse 2s ease-in-out infinite; }
+  }
+  @keyframes pulse{
+    0%,100%{ opacity:1; }
+    50%{ opacity:0.4; }
+  }
+
+  h1.hero-name{
+    font-family: var(--font-pixel);
+    font-size: clamp(22px, 4.2vw, 38px);
+    line-height:1.7;
+    color: var(--text);
+    margin-bottom:14px;
+  }
+
+  .hero-role{
+    font-size: clamp(20px, 2.6vw, 26px);
+    font-weight:600;
+    color: var(--primary);
+    margin-bottom:18px;
+  }
+
+  .hero-desc{
+    max-width:600px;
+    color: var(--grey);
+    font-size:17px;
+    margin-bottom:34px;
+  }
+
+  .hero-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-bottom:40px;
+  }
+
+  .btn{
+    font-family: var(--font-pixel);
+    font-size:11px;
+    padding:14px 20px;
+    border:2px solid var(--primary);
+    transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+    display:inline-block;
+  }
+  .btn-primary{
+    background: var(--primary);
+    color:#fff;
+  }
+  .btn-primary:hover{ transform: translateY(-2px); background:#6a4ce8; }
+  .btn-ghost{
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+  }
+  .btn-ghost:hover{ border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+  @media (prefers-reduced-motion: reduce){
+    .btn:hover{ transform:none; }
+  }
+
+  .hero-socials{
+    display:flex;
+    gap:12px;
+    margin-bottom:44px;
+  }
+  .social-btn{
+    width:42px; height:42px;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--border);
+    color: var(--grey);
+    transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+  .social-btn svg{ width:19px; height:19px; fill:currentColor; }
+  .social-btn:hover{ border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+  @media (prefers-reduced-motion: reduce){
+    .social-btn:hover{ transform:none; }
+  }
+
+  .stats-row{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap:12px;
+    max-width:640px;
+  }
+  .stat-box{
+    border:1px solid var(--border);
+    background: var(--card);
+    padding:14px 16px;
+  }
+  .stat-label{
+    font-family: var(--font-mono);
+    font-size:11px;
+    color: var(--grey-dim);
+    letter-spacing:1px;
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .stat-value{
+    font-size:19px;
+    font-weight:600;
+    color: var(--text);
+  }
+
+  .terminal-section{
+    padding: 70px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .terminal{
+    max-width: 640px;
+    background: var(--card);
+    border:1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size:15px;
+  }
+  .terminal-bar{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:10px 14px;
+    border-bottom:1px solid var(--border);
+  }
+  .terminal-bar span{
+    width:10px; height:10px;
+    border-radius:50%;
+    background: var(--border);
+  }
+  .terminal-bar .t1{ background:#ff5f56; }
+  .terminal-bar .t2{ background:#ffbd2e; }
+  .terminal-bar .t3{ background:#27c93f; }
+  .terminal-title{
+    margin-left:6px;
+    font-size:12px;
+    color: var(--grey-dim);
+  }
+  .terminal-body{
+    padding:20px;
+    min-height: 150px;
+  }
+  .term-line{ margin-bottom:10px; }
+  .term-prompt{ color: var(--secondary); }
+  .term-cmd{ color: var(--text); }
+  .term-out{ color: var(--grey); padding-left:18px; }
+  .term-cursor{
+    display:inline-block;
+    width:8px; height:15px;
+    background: var(--secondary);
+    vertical-align:middle;
+    margin-left:2px;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .term-cursor{ animation: blink 1s step-end infinite; }
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  section{ position:relative; z-index:2; }
+  .section{
+    padding: 90px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .section-head{
+    margin-bottom:48px;
+  }
+  .section-title{
+    font-family: var(--font-pixel);
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom:10px;
+  }
+  .section-sub{
+    color: var(--grey);
+    font-size:15px;
+  }
+
+  .project-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap:22px;
+  }
+  .card{
+    background: var(--card);
+    border:1px solid var(--border);
+    display:flex;
+    flex-direction:column;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover{
+    border-color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px -12px var(--primary-dim);
+  }
+  @media (prefers-reduced-motion: reduce){
+    .card:hover{ transform:none; }
+  }
+  .card-thumb{
+    width:100%;
+    aspect-ratio:16/10;
+    object-fit:cover;
+    border-bottom:1px solid var(--border);
+    background: linear-gradient(135deg, #16121f, #0d0d10);
+  }
+  .card-body{
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+  }
+  .card-badges{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:12px;
+  }
+  .badge{
+    font-family: var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.5px;
+    padding:4px 8px;
+    border:1px solid;
+    text-transform:uppercase;
+  }
+  .badge-type{ color: var(--primary); border-color: var(--primary); }
+  .badge-status{ display:flex; align-items:center; gap:5px; }
+  .badge-status .dot{ width:6px; height:6px; border-radius:50%; }
+  .badge-status.live{ color: var(--secondary); border-color: var(--secondary); }
+  .badge-status.live .dot{ background: var(--secondary); }
+  .badge-status.progress{ color: var(--amber); border-color: var(--amber); }
+  .badge-status.progress .dot{ background: var(--amber); }
+  .badge-status.archived{ color: var(--grey-dim); border-color: var(--grey-dim); }
+  .badge-status.archived .dot{ background: var(--grey-dim); }
+
+  .card-title{
+    font-size:18px;
+    font-weight:600;
+    color: var(--text);
+    margin-bottom:8px;
+  }
+  .card-desc{
+    color: var(--grey);
+    font-size:14.5px;
+    margin-bottom:16px;
+    flex:1;
+  }
+  .tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-bottom:18px;
+  }
+  .tag{
+    font-family: var(--font-mono);
+    font-size:12px;
+    color: var(--grey);
+    border:1px solid var(--border);
+    padding:3px 8px;
+  }
+  .card-links{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .card-link{
+    font-family: var(--font-pixel);
+    font-size:9px;
+    padding:10px 12px;
+    border:2px solid;
+  }
+  .card-link.link-github{
+    color: var(--text);
+    border-color: var(--border);
+  }
+  .card-link.link-github:hover{ border-color: var(--primary); color: var(--primary); }
+  .card-link.link-live{
+    color: var(--bg);
+    background: var(--primary);
+    border-color: var(--primary);
+  }
+  .card-link.link-live:hover{ background: transparent; color: var(--primary); }
+
+  .empty-state{
+    grid-column:1/-1;
+    text-align:center;
+    padding:60px 20px;
+    border:1px dashed var(--border);
+    color: var(--grey);
+  }
+
+  .skills-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap:28px;
+  }
+  .skill-cat-title{
+    font-family: var(--font-mono);
+    font-size:13px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color: var(--primary);
+    margin-bottom:14px;
+  }
+  .skill-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .chip{
+    font-size:13.5px;
+    color: var(--text);
+    background: var(--card);
+    border:1px solid var(--border);
+    padding:7px 13px;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .chip:hover{ border-color: var(--primary); color: var(--primary); }
+
+  .timeline{
+    position:relative;
+    padding-left:28px;
+    border-left:1px solid var(--border);
+  }
+  .timeline-item{
+    position:relative;
+    padding-bottom:38px;
+  }
+  .timeline-item:last-child{ padding-bottom:0; }
+  .timeline-item::before{
+    content:"";
+    position:absolute;
+    left:-33px;
+    top:4px;
+    width:9px; height:9px;
+    background: var(--primary);
+    border:2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--primary);
+  }
+  .timeline-year{
+    font-family: var(--font-mono);
+    font-size:13px;
+    color: var(--primary);
+    margin-bottom:6px;
+  }
+  .timeline-title{
+    font-size:16.5px;
+    font-weight:600;
+    color: var(--text);
+    margin-bottom:6px;
+  }
+  .timeline-desc{
+    color: var(--grey);
+    font-size:14.5px;
+    max-width:520px;
+  }
+
+  .contact-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap:16px;
+  }
+  .contact-card{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    border:1px solid var(--border);
+    background: var(--card);
+    padding:18px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .contact-card:hover{ border-color: var(--primary); transform: translateY(-2px); }
+  @media (prefers-reduced-motion: reduce){
+    .contact-card:hover{ transform:none; }
+  }
+  .contact-icon{
+    width:38px; height:38px;
+    flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--border);
+    color: var(--primary);
+  }
+  .contact-icon svg{ width:18px; height:18px; fill:currentColor; }
+  .contact-label{
+    font-family: var(--font-mono);
+    font-size:11px;
+    color: var(--grey-dim);
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    margin-bottom:3px;
+  }
+  .contact-value{ font-size:14.5px; color: var(--text); word-break:break-word; }
+
+  footer{
+    padding: 34px 0 44px;
+    text-align:center;
+    color: var(--grey-dim);
+    font-family: var(--font-mono);
+    font-size:13px;
+    position:relative; z-index:2;
+  }
+
+  .reveal{
+    opacity:0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .reveal.in{
+    opacity:1;
+    transform:none;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scanlines"></div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="logo">SK</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">≡</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#journey">Journey</a>
+      <a href="#contact">Contact</a>
+      <a class="nav-resume" id="navResume" href="#" target="_blank" rel="noopener">RESUME</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="wrap">
+    <div class="status-pill"><span class="status-dot"></span><span id="heroStatus">Open to AI / ML Internships</span></div>
+    <h1 class="hero-name" id="heroName">SAHIL KATIYAR</h1>
+    <div class="hero-role" id="heroRole">AI Engineer</div>
+    <p class="hero-desc" id="heroDesc">Building machine learning systems, LLM applications, and production AI pipelines.</p>
+
+    <div class="hero-actions">
+      <a class="btn btn-primary" id="resumeBtn" href="#" target="_blank" rel="noopener">DOWNLOAD RESUME</a>
+      <a class="btn btn-ghost" href="#projects">VIEW PROJECTS</a>
+    </div>
+
+    <div class="hero-socials" id="heroSocials"></div>
+
+    <div class="stats-row" id="statsRow"></div>
+  </div>
+</section>
+
+<section class="terminal-section">
+  <div class="wrap">
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="t1"></span><span class="t2"></span><span class="t3"></span>
+        <span class="terminal-title">sahil@portfolio: ~</span>
+      </div>
+      <div class="terminal-body" id="terminalBody"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">// PROJECTS</div>
+      <div class="section-title">Things I've built</div>
+      <p class="section-sub">Updated as new work ships.</p>
+    </div>
+    <div class="project-grid" id="projectGrid"></div>
+  </div>
+</section>
+
+<section class="section" id="skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">// SKILLS</div>
+      <div class="section-title">Tools &amp; technologies</div>
+    </div>
+    <div class="skills-grid" id="skillsGrid"></div>
+  </div>
+</section>
+
+<section class="section" id="journey">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">// JOURNEY</div>
+      <div class="section-title">How I got here</div>
+    </div>
+    <div class="timeline" id="timelineList"></div>
+  </div>
+</section>
+
+<section class="section" id="contact" style="border-bottom:none;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">// CONTACT</div>
+      <div class="section-title">Let's talk</div>
+      <p class="section-sub">Open to internships and collaboration — reach out any of these ways.</p>
+    </div>
+    <div class="contact-grid" id="contactGrid"></div>
+  </div>
+</section>
+
+<footer>
+  Built with HTML, CSS &amp; JS — designed by Sahil
+</footer>
+
+<script>
+const PROFILE = {
+  name: "SAHIL KATIYAR",
+  role: "AI Engineer",
+  status: "Open to AI / ML Internships",
+  desc: "Building machine learning systems, LLM applications, multi-agent systems, and production AI pipelines.",
+  resume: "doc/resume.pdf",
+  socials: {
+    github: "https://github.com/Sahilkatiyar17/",
+    linkedin: "https://www.linkedin.com/in/sahil-katiyar-3b3a24248/",
+    email: "sahilkatiyar2024@gmail.com"
+  },
+  stats: [
+    { label: "CGPA",     value: "10.00" },
+    { label: "Projects", value: "6+" },
+    { label: "Degree",   value: "BSc in Data science" },
+    { label: "Location", value: "Mumbai, India" }
+  ]
+};
+
+const TERMINAL_LINES = [
+  { cmd: "whoami", out: "Sahil Katiyar" },
+  { cmd: "interests", out: "Machine Learning · Agentic AI · NLP · LLMs" },
+  { cmd: "status", out: "Open for Internship" }
+];
+
+const SKILLS = [
+  { category: "Languages & Core", items: ["Python", "SQL"] },
+  { category: "ML / Deep Learning", items: ["scikit-learn", "TensorFlow", "PyTorch"] },
+  { category: "LLM / Agentic AI", items: ["LangChain", "LangGraph", "RAG","Context engineering","langsmith"] },
+  { category: "Tools & Cloud", items: ["Docker", "Git", "FastAPI","MLops","CI/CD - github action","AWS"] }
+];
+
+const TIMELINE = [
+  { year: "2023", title: "Started BSc Data Science", desc: "Began formal study, first exposure to Python and statistics." },
+  { year: "2024", title: "Core Machine Learning", desc: "Built first ML models — regression, classification, and evaluation pipelines." },
+  { year: "2025", title: "Deep Learning", desc: "Moved into neural networks and deep learning frameworks." },
+  { year: "2025", title: "LLMs & NLP", desc: "Focused on large language models and applied NLP projects." },
+  { year: "2026", title: "Agentic AI", desc: "Building multi-agent systems and production-grade AI pipelines." },
+  { year: "Now", title: "Looking for an Internship", desc: "Open to AI / ML engineering internships." }
+];
+
+const PROJECTS = [
+  {
+    title: "NLP - Complaint Intelligence Pipeline",
+    type: "Personal",
+    status: "Archived",
+    description: "Automatically classifies customer complaint categories and detects urgent complaints — using NLP, dual ML models, full experiment tracking, and an automated CI/CD pipeline to Kubernetes.",
+    image: "doc/db4712a5-0b4e-4230-bfc7-3532f390d172.png",
+    tags: ["python","Mlops","sklearn","MLflow","Kubernetes","CI/CD"],
+    github: "https://github.com/Sahilkatiyar17/CFPB_Complaint_Intelligence_pipeline",
+    link: "https://www.youtube.com/watch?v=Xd9neQMc8mg"
+  },
+  {
+    title: "Boss-employee agentic rag",
+    type: "Personal",
+    status: "Archived",
+    description: "The Boss-Employee Agentic RAG System is a multi-agent AI framework designed to simulate a dynamic office workflow where tasks are intelligently assigned and executed by specialized AI agents. This project demonstrates how agentic RAG pipelines can be leveraged to create autonomous, problem-solving AI systems.",
+    image: "doc/image.png",
+    tags: ["python","Mutli-agent","Langchain","langgraph","langsmith"],
+    github: "https://github.com/Sahilkatiyar17/boss_employee_agentic_rag",
+    link: "https://www.youtube.com/watch?v=99FtCAakQxo"
+  },
+  {
+    title: "Vidyut Sanchay - Intelligent AI Orchestrator for Power Grid Procurement & Logistics",
+    type: "Hackathon",
+    status: "Archived",
+    description: "Vidyut Sanchay (Sanskrit for Electricity Accumulation) is an advanced AI-driven platform designed to revolutionize the supply chain of power transmission infrastructure. By combining Machine Learning, Generative AI (LLMs), and Live Market Data, it automates the complex planning of transmission lines, supplier selection, logistics routing, and risk analysis.",
+    image: "doc/fbf5d255-ccdc-4bf5-8b63-d1868c24771a.png",
+    tags: ["python","Mlops","sklearn","MLflow","Kubernetes","CI/CD"],
+    github: "https://github.com/Sahilkatiyar17/Vidyut-Sanchay-India-s-PowerGrid-Demand-Forecasting-and-Supply-Chain-Mangement",
+    link: ""
+  },
+  {
+    title: "langgraph AI_Notes_agent workflow",
+    type: "Personal",
+    status: "Archived",
+    description: "AI Notes Maker is an intelligent, automated system built using LangGraph that generates, evaluates, and refines educational notes through a multi-step feedback-driven workflow. It integrates AI agents for each stage — from topic index generation to human-in-the-loop review — enabling structured, high-quality note creation.",
+    image: "doc/aab0631c-327c-4131-ac47-1686bfac8f77.png",
+    tags: ["python","Langchain","langgraph","SQlite","Google Gemini & Mistral LLM"],
+    github: "https://github.com/Sahilkatiyar17/langgraph_AI_Notes_agent_workflow",
+    link: ""
+  },
+  {
+    title: "Fine-Tuning Models",
+    type: "Personal",
+    status: "Archived",
+    description: "A collection of notebooks demonstrating how to fine-tune various models (LLMs, BERT, embeddings, CLIP etc.) for real-world downstream tasks using different techniques such as QLoRA, LoRA, supervised fine-tuning, and retrieval optimization.",
+    image: "doc/image1.png",
+    tags: ["python","Unsloth","Transformers","Huggingface"],
+    github: "https://github.com/Sahilkatiyar17/Fine_tuning_models",
+    link: ""
+  },
+  {
+    title: "AI-Powered Marketplace Assistant for Local Artisans",
+    type: "Hackathon",
+    status: "Archived",
+    description: "An MVP web platform that helps artisans showcase products, sell online, and grow their digital presence with AI-generated storytelling, AR try-on, analytics, and multilingual support.",
+    image: "doc/9cb88a42-4f85-4c62-b619-414aa3dad330.png",
+    tags: ["python","Google Cloud Speech-to-Text", "Google Generative AI (Gemini)","Next.js API Routes", "Prisma ORM (SQLite)","Flask"],
+    github: "https://github.com/Sahilkatiyar17/AI-Powered-Marketplace-Assistant-for-Local-Artisans",
+    link: ""
+  },
+];
+
+function svgIcon(name){
+  const icons = {
+    github: '<svg viewBox="0 0 24 24"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.1 3.29 9.42 7.86 10.95.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.04-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.26 5.69.42.36.78 1.08.78 2.18 0 1.57-.02 2.84-.02 3.23 0 .31.21.67.8.56A10.51 10.51 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"/></svg>',
+    linkedin: '<svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>',
+    email: '<svg viewBox="0 0 24 24"><path d="M2 4h20a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Zm18.4 2H3.6l8.4 6.3L20.4 6ZM3 7.5V18h18V7.5l-8.4 6.3a1 1 0 0 1-1.2 0L3 7.5Z"/></svg>',
+    resume: '<svg viewBox="0 0 24 24"><path d="M6 2h9l5 5v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Zm8 1.5V8h4.5L14 3.5ZM8 13h8v1.5H8V13Zm0 4h8v1.5H8V17Zm0-8h4v1.5H8V9Z"/></svg>'
+  };
+  return icons[name] || '';
+}
+
+function placeholderSVG(){
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200">
+      <rect width="320" height="200" fill="#111114"/>
+      <rect x="14" y="14" width="292" height="172" fill="none" stroke="#2a2a2e" stroke-width="1.5" stroke-dasharray="6 5"/>
+      <text x="160" y="106" font-family="monospace" font-size="14" fill="#6b6b6f" text-anchor="middle">NO IMAGE</text>
+    </svg>
+  `);
+}
+
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 20);
+});
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+document.getElementById('heroName').textContent = PROFILE.name;
+document.getElementById('heroRole').textContent = PROFILE.role;
+document.getElementById('heroStatus').textContent = PROFILE.status;
+document.getElementById('heroDesc').textContent = PROFILE.desc;
+
+const resumeHref = PROFILE.resume || '#contact';
+document.getElementById('resumeBtn').href = resumeHref;
+document.getElementById('navResume').href = resumeHref;
+
+const heroSocials = document.getElementById('heroSocials');
+[
+  ['github', PROFILE.socials.github],
+  ['linkedin', PROFILE.socials.linkedin],
+  ['email', 'mailto:' + PROFILE.socials.email]
+].forEach(([key, url]) => {
+  if (!url || url === 'mailto:') return;
+  const a = document.createElement('a');
+  a.className = 'social-btn';
+  a.href = url;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.setAttribute('aria-label', key);
+  a.innerHTML = svgIcon(key);
+  heroSocials.appendChild(a);
+});
+
+const statsRow = document.getElementById('statsRow');
+PROFILE.stats.forEach(s => {
+  const box = document.createElement('div');
+  box.className = 'stat-box';
+  box.innerHTML = `<div class="stat-label">${s.label}</div><div class="stat-value">${s.value}</div>`;
+  statsRow.appendChild(box);
+});
+
+const termBody = document.getElementById('terminalBody');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function renderTerminalInstant(){
+  termBody.innerHTML = TERMINAL_LINES.map(l => `
+    <div class="term-line"><span class="term-prompt">&gt;</span> <span class="term-cmd">${l.cmd}</span></div>
+    <div class="term-line term-out">${l.out}</div>
+  `).join('');
+}
+
+function typeTerminal(){
+  let lineIndex = 0;
+  function nextLine(){
+    if (lineIndex >= TERMINAL_LINES.length){
+      const cursor = document.createElement('span');
+      cursor.className = 'term-cursor';
+      termBody.appendChild(cursor);
+      return;
+    }
+    const l = TERMINAL_LINES[lineIndex];
+    const cmdLine = document.createElement('div');
+    cmdLine.className = 'term-line';
+    cmdLine.innerHTML = `<span class="term-prompt">&gt;</span> <span class="term-cmd"></span>`;
+    termBody.appendChild(cmdLine);
+    const cmdSpan = cmdLine.querySelector('.term-cmd');
+    let i = 0;
+    const typer = setInterval(() => {
+      cmdSpan.textContent += l.cmd[i];
+      i++;
+      if (i >= l.cmd.length){
+        clearInterval(typer);
+        setTimeout(() => {
+          const outLine = document.createElement('div');
+          outLine.className = 'term-line term-out';
+          outLine.textContent = l.out;
+          termBody.appendChild(outLine);
+          lineIndex++;
+          setTimeout(nextLine, 350);
+        }, 200);
+      }
+    }, 35);
+  }
+  nextLine();
+}
+
+if (reduceMotion){ renderTerminalInstant(); } else { typeTerminal(); }
+
+function statusLabel(s){
+  return { live: "Live", progress: "In Progress", archived: "Archived" }[s] || s;
+}
+
+function renderProjects(){
+  const grid = document.getElementById('projectGrid');
+  grid.innerHTML = "";
+
+  if (!PROJECTS.length){
+    grid.innerHTML = `<div class="empty-state">No projects yet — add one to the PROJECTS list in the code.</div>`;
+    return;
+  }
+
+  PROJECTS.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'card reveal';
+
+    const isVideo = /youtu\.be|youtube\.com|vimeo\.com/i.test(p.link || "");
+    const githubHTML = p.github
+      ? `<a class="card-link link-github" href="${p.github}" target="_blank" rel="noopener">CODE</a>`
+      : '';
+    const linkHTML = p.link
+      ? `<a class="card-link link-live" href="${p.link}" target="_blank" rel="noopener">${isVideo ? 'VIDEO' : 'LIVE'}</a>`
+      : '';
+    const tagsHTML = (p.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
+
+    card.innerHTML = `
+      <img class="card-thumb" src="${p.image || placeholderSVG()}" alt="${p.title} thumbnail" loading="lazy">
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge badge-type">${p.type}</span>
+          <span class="badge badge-status ${p.status}"><span class="dot"></span>${statusLabel(p.status)}</span>
+        </div>
+        <div class="card-title">${p.title}</div>
+        <div class="card-desc">${p.description}</div>
+        <div class="tags">${tagsHTML}</div>
+        <div class="card-links">${githubHTML}${linkHTML}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+renderProjects();
+
+const skillsGrid = document.getElementById('skillsGrid');
+SKILLS.forEach(group => {
+  const col = document.createElement('div');
+  col.className = 'reveal';
+  col.innerHTML = `
+    <div class="skill-cat-title">${group.category}</div>
+    <div class="skill-chips">${group.items.map(i => `<span class="chip">${i}</span>`).join('')}</div>
+  `;
+  skillsGrid.appendChild(col);
+});
+
+const timelineList = document.getElementById('timelineList');
+TIMELINE.forEach(t => {
+  const item = document.createElement('div');
+  item.className = 'timeline-item reveal';
+  item.innerHTML = `
+    <div class="timeline-year">${t.year}</div>
+    <div class="timeline-title">${t.title}</div>
+    <div class="timeline-desc">${t.desc}</div>
+  `;
+  timelineList.appendChild(item);
+});
+
+const contactGrid = document.getElementById('contactGrid');
+const contactItems = [
+  { label: "Email", value: PROFILE.socials.email, href: 'mailto:' + PROFILE.socials.email, icon: 'email' },
+  { label: "LinkedIn", value: "sahil-katiyar", href: PROFILE.socials.linkedin, icon: 'linkedin' },
+  { label: "GitHub", value: "Sahilkatiyar17", href: PROFILE.socials.github, icon: 'github' },
+  { label: "Resume", value: "Download PDF", href: resumeHref, icon: 'resume' }
+];
+contactItems.forEach(c => {
+  const a = document.createElement('a');
+  a.className = 'contact-card';
+  a.href = c.href;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.innerHTML = `
+    <div class="contact-icon">${svgIcon(c.icon)}</div>
+    <div>
+      <div class="contact-label">${c.label}</div>
+      <div class="contact-value">${c.value}</div>
+    </div>
+  `;
+  contactGrid.appendChild(a);
+});
+
+const revealEls = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window && !reduceMotion){
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+} else {
+  revealEls.forEach(el => el.classList.add('in'));
+}
+</script>
+
+</body>
+</html>
